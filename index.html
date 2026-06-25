@@ -105,6 +105,22 @@
             letter-spacing: -0.5px;
         }
 
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--texto-principal);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 8px;
+            transition: all .3s ease;
+        }
+
+        .menu-toggle:hover {
+            border-color: var(--bordas);
+            background: rgba(255,255,255,0.03);
+        }
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -797,13 +813,90 @@
                 margin: 0 auto;
             }
 
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+
             .nav-links {
                 display: none;
-                /* Simplification for modular purity unless toggle included */
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+
+                position: absolute;
+                top: calc(100% + 15px);
+                right: 0;
+
+                width: 260px;
+
+                background: rgba(22, 27, 34, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+
+                border: 1px solid var(--bordas);
+                border-radius: 14px;
+
+                overflow: hidden;
+
+                box-shadow:
+                    0 10px 40px rgba(0,0,0,.4),
+                    0 0 30px rgba(88,166,255,.08);
+
+                animation: menuFade .25s ease;
+            }
+
+            .nav-links.active li {
+                width: 100%;
+            }
+
+            .nav-links.active a {
+                display: flex;
+                align-items: center;
+
+                width: 100%;
+
+                padding: 14px 18px;
+
+                color: var(--texto-secundario);
+
+                transition: all .25s ease;
+            }
+
+            .nav-links.active a:hover {
+                background: rgba(88,166,255,.08);
+                color: var(--texto-principal);
+                padding-left: 24px;
+            }
+
+            .nav-links.active a.active {
+                background: rgba(88,166,255,.10);
+                color: var(--cor-destaque);
+            }
+
+            .nav-links.active a.active::after {
+                display: none;
             }
 
             .section-title {
                 margin-bottom: 2rem;
+            }
+        }
+        @keyframes menuFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -889,7 +982,46 @@
         }
     </style>
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
 
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (!menuToggle || !navLinks) return;
+
+        menuToggle.addEventListener('click', () => {
+
+            navLinks.classList.toggle('active');
+
+            const icon = menuToggle.querySelector('i');
+
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-fa-grip-lines');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-fa-grip-lines');
+            }
+
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+
+            link.addEventListener('click', () => {
+
+                navLinks.classList.remove('active');
+
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-fa-grip-lines');
+
+            });
+
+        });
+
+    });
+</script>
 <body>
 
     <!-- Init Screen Overlay -->
@@ -1086,6 +1218,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#hero" class="nav-logo mono">&lt;AK /&gt;</a>
+
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <ul class="nav-links">
                 <li><a href="#about" class="nav-item">Sobre</a></li>
                 <li><a href="#tech" class="nav-item">Tecnologias</a></li>
@@ -1335,16 +1472,16 @@
                     <button class="carousel-btn carousel-btn-next" aria-label="Próximo"><i
                             class="fas fa-chevron-right"></i></button>
                     <div class="carousel-container">
-                        <img src="imagens_projetos/sngpc1.jpeg" alt="SNGPC 1">
-                        <img src="imagens_projetos/sngpc2.jpeg" alt="SNGPC 2">
-                        <img src="imagens_projetos/sngpc3.jpeg" alt="SNGPC 3">
-                        <img src="imagens_projetos/sngpc4.jpeg" alt="SNGPC 4">
-                        <img src="imagens_projetos/sngpc5.jpeg" alt="SNGPC 5">
-                        <img src="imagens_projetos/sngpc6.jpeg" alt="SNGPC 6">
-                        <img src="imagens_projetos/sngpc7.jpeg" alt="SNGPC 7">
-                        <img src="imagens_projetos/sngpc8.jpeg" alt="SNGPC 8">
-                        <img src="imagens_projetos/sngpc9.jpeg" alt="SNGPC 9">
-                        <img src="imagens_projetos/sngpc10.jpeg" alt="SNGPC 10">
+                        <img src="../portolio_akira/imagens_projetos/sngpc1.jpeg" alt="SNGPC 1">
+                        <img src="../portolio_akira/imagens_projetos/sngpc2.jpeg" alt="SNGPC 2">
+                        <img src="../portolio_akira/imagens_projetos/sngpc3.jpeg" alt="SNGPC 3">
+                        <img src="../portolio_akira/imagens_projetos/sngpc4.jpeg" alt="SNGPC 4">
+                        <img src="../portolio_akira/imagens_projetos/sngpc5.jpeg" alt="SNGPC 5">
+                        <img src="../portolio_akira/imagens_projetos/sngpc6.jpeg" alt="SNGPC 6">
+                        <img src="../portolio_akira/imagens_projetos/sngpc7.jpeg" alt="SNGPC 7">
+                        <img src="../portolio_akira/imagens_projetos/sngpc8.jpeg" alt="SNGPC 8">
+                        <img src="../portolio_akira/imagens_projetos/sngpc9.jpeg" alt="SNGPC 9">
+                        <img src="../portolio_akira/imagens_projetos/sngpc10.jpeg" alt="SNGPC 10">
                     </div>
                 </div>
                 <div>
@@ -1367,9 +1504,9 @@
                     <button class="carousel-btn carousel-btn-next" aria-label="Próximo"><i
                             class="fas fa-chevron-right"></i></button>
                     <div class="carousel-container">
-                        <img src="imagens_projetos/correios1.jpeg" alt="Correios 1">
-                        <img src="imagens_projetos/correios2.jpeg" alt="Correios 2">
-                        <img src="imagens_projetos/correios3.jpeg" alt="Correios 3">
+                        <img src="../portolio_akira/imagens_projetos/correios1.jpeg" alt="Correios 1">
+                        <img src="../portolio_akira/imagens_projetos/correios2.jpeg" alt="Correios 2">
+                        <img src="../portolio_akira/imagens_projetos/correios3.jpeg" alt="Correios 3">
                     </div>
                 </div>
                 <div>
@@ -1392,10 +1529,10 @@
                     <button class="carousel-btn carousel-btn-next" aria-label="Próximo"><i
                             class="fas fa-chevron-right"></i></button>
                     <div class="carousel-container">
-                        <img src="imagens_projetos/telalogin.jpeg" alt="Importação 1">
-                        <img src="imagens_projetos/telaprincipal.jpeg" alt="Importação 2">
-                        <img src="imagens_projetos/telasalvarproduto1.jpeg" alt="Importação 3">
-                        <img src="imagens_projetos/telasalvarproduto2.jpeg" alt="Importação 4">
+                        <img src="../portolio_akira/imagens_projetos/telalogin.jpeg" alt="Importação 1">
+                        <img src="../portolio_akira/imagens_projetos/telaprincipal.jpeg" alt="Importação 2">
+                        <img src="../portolio_akira/imagens_projetos/telasalvarproduto1.jpeg" alt="Importação 3">
+                        <img src="../portolio_akira/imagens_projetos/telasalvarproduto2.jpeg" alt="Importação 4">
                     </div>
                 </div>
                 <div>
@@ -1418,11 +1555,11 @@
                     <button class="carousel-btn carousel-btn-next" aria-label="Próximo"><i
                             class="fas fa-chevron-right"></i></button>
                     <div class="carousel-container">
-                        <img src="imagens_projetos/telaloginecommerce.jpeg" alt="E-commerce 1">
-                        <img src="imagens_projetos/telarecuperacaoecommerce.jpeg" alt="E-commerce 2">
-                        <img src="imagens_projetos/telarecuperacaocodigoecommerce.jpeg"
+                        <img src="../portolio_akira/imagens_projetos/telaloginecommerce.jpeg" alt="E-commerce 1">
+                        <img src="../portolio_akira/imagens_projetos/telarecuperacaoecommerce.jpeg" alt="E-commerce 2">
+                        <img src="../portolio_akira/imagens_projetos/telarecuperacaocodigoecommerce.jpeg"
                             alt="E-commerce 3">
-                        <img src="imagens_projetos/telacadastroecommerce.jpeg" alt="E-commerce 4">
+                        <img src="../portolio_akira/imagens_projetos/telacadastroecommerce.jpeg" alt="E-commerce 4">
                     </div>
                 </div>
                 <div>
