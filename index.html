@@ -981,6 +981,11 @@
             right: 8px;
         }
     </style>
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+    </script>
 </head>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1023,6 +1028,16 @@
         });
 
     });
+
+    window.addEventListener('load', () => {
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    }, 0);
+});
 </script>
 <body>
 
